@@ -15,13 +15,15 @@ class App extends React.Component {
 
   search (term) {
     console.log(`${term} was searched`);
-    // TODO
+    $.post('/repos', (term) => {
+      if() // if exist in the data base 
+    })
   }
 
   render () {
     return (<div>
       <h1>Github Fetcher</h1>
-      <RepoList repos={this.state.repos}/>
+      <RepoList repos={this.state.repos.bind(this)}/>
       <Search onSearch={this.search.bind(this)}/>
     </div>)
   }
