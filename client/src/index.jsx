@@ -14,17 +14,32 @@ class App extends React.Component {
   }
 
   search (term) {
-    console.log(`${term} was searched`);
-    $.post('/repos', (term) => {
-      if() // if exist in the data base 
-    })
+    $.ajax({
+      url: "/repos",
+      type: 'POST',
+      data: {user: term},
+      dataType: 'json',
+      success: () => {
+        console.log('shit worked yo');
+      },
+      error: (error) => { console.log(error); }
+    });
+    
+    // console.log(`${term} was searched`);
+    // var options = {
+    //   data: {user: term}
+    // };
+    // $.post('/repos', (data) => {
+    //   console.log("other shit is done hwere " + data);
+    //   // callback(data.body); // if exist in the data base 
+   // ? }, options);
   }
 
   render () {
     return (<div>
       <h1>Github Fetcher</h1>
-      <RepoList repos={this.state.repos.bind(this)}/>
-      <Search onSearch={this.search.bind(this)}/>
+      <RepoList repos={this.state.repos}/>
+      <Search onSearch={this.search}/>
     </div>)
   }
 }
