@@ -20,6 +20,7 @@ let getReposByUsername = (username) => {
   request.get(options, (e, r, repoArr) => {
     // console.log(JSON.parse(repoArr));
     var parsedRepos = JSON.parse(repoArr);
+    console.log("about to save data")
     for(var i = 0; i < parsedRepos.length; i++){
       db.save(parsedRepos[i]);
     }

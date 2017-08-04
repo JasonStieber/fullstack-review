@@ -10,29 +10,42 @@ class App extends React.Component {
     this.state = { 
       repos: []
     }
-
+    this.search = this.search.bind(this);
   }
-
+  
+  onChange (e) { // this is not complete please do this NEXT!!!!
+    console.log('hey are we here>>?');
+    this.setState({
+      repos: e.value
+    });
+  }
   search (term) {
+    var that = this;
+    console.log('conossesl');
     $.ajax({
       url: "/repos",
       type: 'POST',
       data: {user: term},
-      dataType: 'json',
       success: () => {
-        console.log('shit worked yo');
+        console.log('we in the thing');
+        console.log(term);
+        $.ajax({
+          url: "/repos",
+          type: 'GET',
+          data: {user: term},
+          success: (data) => {
+            console.log('data is whateber', data);
+            that.onChange(data);
+          },
+          error: (xhr, textStatus, errorThrown) => { 
+            console.log("error: Get ", errorThrown); 
+          }
+        });
       },
-      error: (error) => { console.log(error); }
+      error: (xhr, textStatus, errorThrown) => {
+        console.log("error: Post", errorThrown); 
+      }
     });
-    
-    // console.log(`${term} was searched`);
-    // var options = {
-    //   data: {user: term}
-    // };
-    // $.post('/repos', (data) => {
-    //   console.log("other shit is done hwere " + data);
-    //   // callback(data.body); // if exist in the data base 
-   // ? }, options);
   }
 
   render () {

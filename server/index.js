@@ -1,5 +1,6 @@
 const express = require('express');
 const gitHub = require('../helpers/github.js');
+const db = require('../database/index.js');
 var bodyParser = require('body-parser');
 let app = express();
 
@@ -14,17 +15,24 @@ app.post('/repos', function (req, res) {
   // console.log("string and a comma", req);
 
   // if(err) { throw err; } 
-  gitHub.getReposByUsername(req.body.user)
+  gitHub.getReposByUsername(req.body.user);
 
 
   // This route should take the github username provided
   // and get the repo information from the github API, then
   // save the repo information in the database
+  console.log('about to finish POST')
   res.end();
 });
 
 app.get('/repos', function (req, res) {
-  // TODO - your code here!
+  console.log(req.query.user);
+  db.fetch(25, req.query.user)
+  .then((data) => {
+    console.log(data)
+    res.send(data);
+  });
+  // res.send();
   // This route should send back the top 25 repos
 });
 
