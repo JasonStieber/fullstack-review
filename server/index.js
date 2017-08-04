@@ -11,10 +11,10 @@ app.use(express.static(__dirname + '/../client/dist'));
 
 app.post('/repos', function (req, res) {
   // TODO - your code here!
-  console.log("string and a comma " + req.body);
+  // console.log("string and a comma", req);
 
   // if(err) { throw err; } 
-  // gitHub.getReposByUsername(req.data.user)
+  gitHub.getReposByUsername(req.body.user)
 
 
   // This route should take the github username provided
